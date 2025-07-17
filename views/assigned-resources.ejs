@@ -1,0 +1,43 @@
+<h2><%= title %></h2>
+<form method="GET" action="/assigned-resources">
+  <label>Date:</label>
+  <input type="date" name="date" value="<%= typeof filterDate !== 'undefined' ? filterDate : '' %>">
+
+  <label>Project:</label>
+  <select name="project">
+    <option value="">-- Select Project --</option>
+    <% projects.forEach(p => { %>
+      <option value="<%= p._id %>" <%= (filterProject == p._id.toString()) ? 'selected' : '' %>><%= p.projectName %></option>
+    <% }) %>
+  </select>
+
+  <button type="submit">Filter</button>
+  <a href="/assigned-resources"><button type="button">Clear</button></a>
+</form>
+
+<br>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Emp Code</th>
+      <th>Employee Name</th>
+      <th>Project</th>
+      <th>Practice</th>
+      <th>Date</th>
+      <th>Hours</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% assignedEmployees.forEach(assign => { %>
+      <tr>
+        <td><%= assign.employee?.empCode || 'N/A' %></td>
+        <td><%= assign.employee?.name || 'N/A' %></td>
+        <td><%= assign.project?.projectName || 'N/A' %></td>
+        <td><%= assign.practice?.practiceName || 'N/A' %></td>
+        <td><%= assign.date ? assign.date.toISOString().split('T')[0] : 'N/A' %></td>
+        <td><%= assign.hours || 'N/A' %></td>
+
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
